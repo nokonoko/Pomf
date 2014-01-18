@@ -71,17 +71,25 @@ function upload_file ($file) {
 
 		// Attempt to move it to the static directory
 		if (move_uploaded_file($file->tempfile, POMF_FILES_ROOT . $newname)) {
-			// Add it to the database
-			$q = $db->prepare('INSERT INTO files (hash, orginalname, filename, size, date, expire, delid)' .
-			                  'VALUES (:hash, :orig, :name, :size, :date, :expires, :delid)');
-			$q->bindValue(':hash', $file->get_sha1());
-			$q->bindValue(':orig', $file->name);
-			$q->bindValue(':name', $newname);
-			$q->bindValue(':size', $file->size);
-			$q->bindValue(':date', date('Y-m-d'));
-			$q->bindValue(':expires', null);
-			$q->bindValue(':delid', sha1($file->tempfile));
-			$q->execute();
+			// Add the file to the database if it's not already there
+			$fq = $db->prepare('INSERT INTO files (hash_sha1, filename, size, mime)' .
+			                   'VALUES (unhex(:hash), :name, :size, :mime)' .
+			                   'ON DUPLICATE KEY UPDATE id=id;');
+			$fq->bindValue(':hash', $file->get_sha1());
+			$fq->bindValue(':name', $newname);
+			$fq->bindValue(':size', $file->size);
+			$fq->execute();
+
+			$lq = $db->prepare('INSERT INTO links (url, upload_time, original_filename, file_id) VALUES (' .
+			                   '  :url, NOW(), :orig, ' .
+			                   '  (SELECT id FROM files WHERE hash_sha1 = :hash AND size = :size)' .
+			                   ')');
+			$lq->bindValue(':url', $newname);
+			$lq->bindValue(':orig', $file->name);
+			$lq->bindValue(':hash', $file->get_sha1());
+			$lq->bindValue(':size', $file->size);
+			$lq->execute();
+
 			return array(
 				'hash' => $file->get_sha1(),
 				'name' => $file->name,
