@@ -32,3 +32,7 @@ SELECT id, unhex(hash), orginalname, size from files;
 
 INSERT INTO pomf_new_links (id, url, upload_time, original_filename)
 SELECT id, filename, timestamp(date), orginalname from files;
+
+RENAME TABLE files TO old_files;
+RENAME TABLE pomf_new_files TO files;
+RENAME TABLE pomf_new_links TO links;
