@@ -28,10 +28,10 @@ CREATE TABLE pomf_new_links (
 );
 
 INSERT INTO pomf_new_files (id, hash_sha1, filename, size)
-SELECT id, unhex(hash), orginalname, size from files;
+SELECT id, unhex(hash), orginalname, size FROM files;
 
 INSERT INTO pomf_new_links (id, url, upload_time, original_filename)
-SELECT id, filename, timestamp(date), orginalname from files;
+SELECT id, filename, timestamp(date), orginalname FROM files;
 
 RENAME TABLE files TO old_files;
 RENAME TABLE pomf_new_files TO files;
