@@ -1,0 +1,58 @@
+FROM ubuntu:latest
+MAINTAINER nuck
+
+ENV DEBIAN_FRONTEND noninteractive
+
+# Basic system
+RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list &&\
+  apt-get update &&\
+  dpkg-divert --local --rename --add /sbin/initctl &&\
+  ln -sf /bin/true /sbin/initctl &&\
+  ln -sf /bin/false /usr/sbin/policy-rc.d
+
+# Install python-software-properties (provides add-apt-respository)
+RUN apt-get -qq -y update &&\
+  apt-get -qq -y install python-software-properties >/dev/null
+
+# Install the packages
+RUN add-apt-repository -y ppa:nginx/stable &&\
+  apt-get -qq -y update &&\
+  apt-get -qq -y install nginx >/dev/null
+
+# Modify the config
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+
+RUN echo "server {\n\
+    listen  80;\n\
+    server_name  pomf.* www.pomf.*;\n\
+\n\
+    root  /var/www/uploader;\n\
+    autoindex  off;\n\
+    index  index.html;\n\
+\n\
+    etag  on;\n\
+    expires  @12h;\n\
+\n\
+    error_page  404 /404.html;\n\
+\n\
+    location ~* \.php\$ {\n\
+      try_files  $uri =404;
+      fastcgi_pass  \$php_addr;\n\
+      fastcgi_intercept_errors  on;\n\
+      fastcgi_split_path_info  ^(.+\.php)(.*)\$;\n\
+      include  fastcgi_params;\n\
+      fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;\n\
+    }\n\
+  }" > /etc/nginx/sites-available/pomf &&\
+  ln -s /etc/nginx/sites-available/pomf /etc/nginx/sites-enabled/pomf
+
+RUN echo "#!/bin/bash\n\
+  sed -i \"s|\\\$php_addr|\$PHP_PORT_12011_TCP_ADDR:\$PHP_PORT_12011_TCP_PORT|\" /etc/nginx/sites-available/pomf\n\
+  /usr/sbin/nginx \"\$@\"" >/usr/local/sbin/nginx &&\
+  chmod u+x /usr/local/sbin/nginx
+
+# Make the www directory
+RUN mkdir -p /var/www
+
+EXPOSE 12000
+CMD ["/usr/local/sbin/nginx"]
