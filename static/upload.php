@@ -155,6 +155,7 @@ function respond_csv ($code, $files) {
  * Responds to a request in JSON form.
  */
 function respond_json ($code, $files) {
+	header("Content-Type: application/json");
 	// Now we send the response based on the type
 	if ($files instanceof Exception) {
 		// If it's an Exception, we put the message in the error field
