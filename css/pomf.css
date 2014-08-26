@@ -245,6 +245,7 @@ nav > ul > li:last-child:after {
 }
 .file-percent {
 	margin-left: 5px;
+	font-style: italic;
 }
 .file-size,
 .file-url {
