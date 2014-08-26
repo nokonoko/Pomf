@@ -243,6 +243,9 @@ nav > ul > li:last-child:after {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+.file-percent {
+	margin-left: 5px;
+}
 .file-size,
 .file-url {
 	display: inline-block;
