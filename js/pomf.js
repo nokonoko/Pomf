@@ -108,7 +108,9 @@ $(function () {
 				$('.file-percent', row).text(progress.toFixed(1) + "%")
 				$('.progress-inner', row).width(progress + '%')
 			})
-			$('.progress-inner', totalRow).width((files.percentUploaded * 100) + '%')
+			var totalProgress = (files.percentUploaded * 100)
+			$('.file-percent', totalRow).text(progress.toFixed(1) + "%")
+			$('.progress-inner', totalRow).width(totalProgress + '%')
 		})
 
 		up.on('uploadcomplete', function (e) {
