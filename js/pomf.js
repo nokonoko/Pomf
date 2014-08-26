@@ -51,6 +51,7 @@ $(function () {
 	var createRow = function (filename, size, extra) {
 		var rowItem = $('<li class=file>')
 		  , rowName = $('<span class=file-name>')
+		  , rowPerc = $('<span class=file-percent>')
 		  , rowProg = $('<div class="file-progress progress-outer">')
 		  , rowSize = $('<span class=file-size>')
 		  , rowUrl  = $('<span class=file-url>')
@@ -61,9 +62,10 @@ $(function () {
 
 		rowItem.attr('data-filename', escape(filename))
 		rowName.text(filename)
+		rowPerc.text("0%")
 		rowSize.text(size)
 
-		rowItem.append(rowName, rowProg, rowSize, rowUrl)
+		rowItem.append(rowName, rowPerc, rowProg, rowSize, rowUrl)
 
 		return rowItem
 	}
@@ -102,12 +104,15 @@ $(function () {
 
 		up.on('uploadprogress', function (e, files) {
 			eachRow(files, function (row, file, files) {
-				$('.progress-inner', row).width((file.percentUploaded * 100) + '%')
+				var progress = (file.percentUploaded * 100) + '%';
+				$('.file-percent', row).text(progress)
+				$('.progress-inner', row).width(progress)
 			})
 			$('.progress-inner', totalRow).width((files.percentUploaded * 100) + '%')
 		})
 
 		up.on('uploadcomplete', function (e) {
+			$('.file-percent').text('100%')
 			$('.progress-inner').width('100%')
 			totalName.text('Grabbing URLs...')
 		})
