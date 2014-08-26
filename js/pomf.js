@@ -104,9 +104,9 @@ $(function () {
 
 		up.on('uploadprogress', function (e, files) {
 			eachRow(files, function (row, file, files) {
-				var progress = (file.percentUploaded * 100) + '%';
-				$('.file-percent', row).text(progress)
-				$('.progress-inner', row).width(progress)
+				var progress = (file.percentUploaded * 100);
+				$('.file-percent', row).text(progress.toFixed(1) + "%")
+				$('.progress-inner', row).width(progress + '%')
 			})
 			$('.progress-inner', totalRow).width((files.percentUploaded * 100) + '%')
 		})
