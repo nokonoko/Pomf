@@ -243,6 +243,9 @@ nav > ul > li:last-child:after {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+.file.total .file-percent{
+	display: none;
+}
 .file-percent {
 	margin-left: 5px;
 	font-style: italic;
