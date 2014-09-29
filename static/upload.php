@@ -32,7 +32,7 @@ function generate_name ($file) {
 
 		// TODO: come up with a better name generating algorithm
 		$newname  = '';                                  // Filename Generator:
-		for (i = 0; i < 6; i++) {
+		for ($i = 0; $i < 6; $i++) {
 
 			$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
 		}
