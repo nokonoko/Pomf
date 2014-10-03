@@ -32,12 +32,10 @@ function generate_name ($file) {
 
 		// TODO: come up with a better name generating algorithm, stop repeating myself.
 		$newname  = '';                                  // Filename Generator:
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
+		for ($i = 0; $i < 6; $i++) {
+
+			$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
+		}
 		// To add a dot or not after a file which has no extension
 		if ($ext != '') $newname .= '.' . strip_tags($ext);
 
