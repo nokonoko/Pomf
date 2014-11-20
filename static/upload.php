@@ -31,13 +31,10 @@ function generate_name ($file) {
 		if ($tries-- == 0) throw new Exception('Gave up trying to find an unused name');
 
 		// TODO: come up with a better name generating algorithm
-		$newname  = '';                                  // Filename Generator:
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
-		$newname .= chr(mt_rand(ord("a"), ord("z")));    // + random lowercase letter
+		$newname  = ''; // Filename Generator:
+		for ($i = 0; $i < 6; $i++) {
+			$newname .= chr(mt_rand(ord("a"), ord("z")));
+		}
 		// To add a dot or not after a file which has no extension
 		if ($ext != '') $newname .= '.' . strip_tags($ext);
 
