@@ -11,7 +11,7 @@ CREATE TABLE files (
      orig VARCHAR(255) NOT NULL,
      name VARCHAR(255) NOT NULL,
      date VARCHAR(255) NOT NULL,
-     expires VARCHAR(255) NOT NULL,
+     expire VARCHAR(255) NOT NULL,
      delid VARCHAR(255) NOT NULL,
      size INT NOT NULL,
      user INT NOT NULL
