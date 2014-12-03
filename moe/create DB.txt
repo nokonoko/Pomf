@@ -5,3 +5,14 @@ CREATE TABLE accounts (
      level INT NOT NULL,
      PRIMARY KEY (id)
 ) ENGINE=InnoDB;
+
+CREATE TABLE files (
+     hash VARCHAR(255) NOT NULL,
+     orig VARCHAR(255) NOT NULL,
+     name VARCHAR(255) NOT NULL,
+     date VARCHAR(255) NOT NULL,
+     expire VARCHAR(255) NOT NULL,
+     delid VARCHAR(255) NOT NULL,
+     size INT NOT NULL,
+     user INT NOT NULL
+) ENGINE=InnoDB;
