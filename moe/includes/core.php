@@ -182,7 +182,7 @@ function delete ($filename, $deleteid, $mod) {
  			if($_SESSION['level'] > '0'){
                         $do = $db->prepare("SELECT * FROM files WHERE originalname LIKE (:keyword) AND date LIKE (:date) OR filename LIKE (:keyword) AND date LIKE (:date) ORDER BY id DESC LIMIT 0,:amount");
                         }else{
-                        $do = $db->prepare("SELECT * FROM files WHERE originalname LIKE (:keyword) AND date LIKE (:date) AND user = (:userid) OR filename LIKE (:keyword) AND date LIKE (:date) AND user = (:userid) ORDER BY id$
+                        $do = $db->prepare("SELECT * FROM files WHERE originalname LIKE (:keyword) AND date LIKE (:date) AND user = (:userid) OR filename LIKE (:keyword) AND date LIKE (:date) AND user = (:userid) ORDER BY id DESC LIMIT 0,:amount");
                         $do->bindValue(':userid', $_SESSION['id']);}
 
  			$do->bindValue(':date', "%".$date."%");
