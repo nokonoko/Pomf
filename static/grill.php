@@ -1,16 +1,17 @@
 <?php
-$images = array(
-	'img/2.png',
-	'img/3.png',
-	'img/4.png',
-	'img/5.png',
-	'img/6.png',
-	'img/7.png',
-	'img/8.png',
-	'img/9.png',
-	'img/10.png'
-);
+$waifus = 10;
+$aWaifus = 0;
+$images = array();
+
+for ($i = 1; $i <= $waifus; $i++) {
+	$images[] = '/img/'.$i.'.png';
+}
+
+for ($i = 1; $i <= $aWaifus; $i++) {
+	$images[] = '/img/'.$i.'.gif';
+}
+
 if (headers_sent() === false) {
-	header('Location: ' . $images[array_rand($images)], true, 303);
+	header('Location: ' . $images[mt_rand(1, count($images))], true, 303);
 }
 ?>
