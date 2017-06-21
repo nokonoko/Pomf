@@ -79,7 +79,10 @@ module.exports = function (grunt) {
 					cwd: 'img/',
 					src: '**/*.{png,jpg,gif}',
 					dest: 'dist/img/'
-				}]
+				}],
+				options: {
+			            cache: false
+			        }
 			}
 		},
 		copy: {
