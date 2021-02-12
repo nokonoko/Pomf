@@ -1,3 +1,6 @@
+# Moved
+Development of Pomf has been moved to [pomf/pomf](https://github.com/pomf/pomf), but the original code will still stay here as well if you fancy this outdated code for whatever reason.
+
 # Pomf
 Original development environment is Nginx + PHP5.5 + MySQL, but is confirmed to work with Apache 2.4
 and newer PHP versions. Should work with any other PDO-compatible database.
